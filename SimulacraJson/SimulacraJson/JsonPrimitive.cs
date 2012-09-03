@@ -30,148 +30,209 @@ namespace SimulacraJson
 
         private Json.JsonType _jsonType = Json.JsonType.String;
         private PrimitiveType _type;
-        private string _value;
+        private object _value;
 
         public JsonPrimitive(Boolean value)
         {
             _jsonType = Json.JsonType.Boolean;
             _type = PrimitiveType.Boolean;
-            _value = value ? "true" : "false";
+            _value = value;
+        }
+        public static implicit operator Boolean(JsonPrimitive value)
+        {
+            return (Boolean)value._value;
         }
 
         public JsonPrimitive(Byte value)
         {
             _jsonType = Json.JsonType.String;
             _type = PrimitiveType.Byte;
-            _value = value.ToString();
+            _value = value;
+        }
+        public static implicit operator Byte(JsonPrimitive value)
+        {
+            return (Byte)value._value;
         }
         
         public JsonPrimitive(Char value)
         {
             _jsonType = Json.JsonType.Number;
             _type = PrimitiveType.Char;
-            _value = value.ToString();
+            _value = value;
+        }
+        public static implicit operator Char(JsonPrimitive value)
+        {
+            return (Char)value._value;
         }
 
         public JsonPrimitive(DateTime value)
         {
             _jsonType = Json.JsonType.Number;
             _type = PrimitiveType.DateTime;
-            _value = value.ToString();
+            _value = value;
+        }
+        public static implicit operator DateTime(JsonPrimitive value)
+        {
+            return (DateTime)value._value;
         }
 
         public JsonPrimitive(Decimal value)
         {
             _jsonType = Json.JsonType.Number;
             _type = PrimitiveType.Decimal;
-            _value = value.ToString();
+            _value = value;
+        }
+        public static implicit operator Decimal(JsonPrimitive value)
+        {
+            return (Decimal)value._value;
         }
 
         public JsonPrimitive(Double value)
         {
             _jsonType = Json.JsonType.Number;
             _type = PrimitiveType.Double;
-            _value = value.ToString();
+            _value = value;
+        }
+        public static implicit operator Double(JsonPrimitive value)
+        {
+            return (Double)value._value;
         }
 
         public JsonPrimitive(Guid value)
         {
             _jsonType = Json.JsonType.String;
             _type = PrimitiveType.Guid;
-            _value = value.ToString();
+            _value = value;
+        }
+        public static implicit operator Guid(JsonPrimitive value)
+        {
+            return (Guid)value._value;
         }
 
         public JsonPrimitive(Int16 value)
         {
             _jsonType = Json.JsonType.Number;
             _type = PrimitiveType.Int16;
-            _value = value.ToString();
+            _value = value;
+        }
+        public static implicit operator Int16(JsonPrimitive value)
+        {
+            return (Int16)value._value;
         }
         
         public JsonPrimitive(Int32 value)
         {
             _jsonType = Json.JsonType.Number;
             _type = PrimitiveType.Int32;
-            _value = value.ToString();
+            _value = value;
+        }
+        public static implicit operator Int32(JsonPrimitive value)
+        {
+            return (Int32)value._value;
         }
         
         public JsonPrimitive(Int64 value)
         {
             _jsonType = Json.JsonType.Number;
             _type = PrimitiveType.Int64;
-            _value = value.ToString();
+            _value = value;
+        }
+        public static implicit operator Int64(JsonPrimitive value)
+        {
+            return (Int64)value._value;
         }
 
         public JsonPrimitive(SByte value)
         {
             _jsonType = Json.JsonType.Number;
             _type = PrimitiveType.SByte;
-            _value = value.ToString();
+            _value = value;
+        }
+        public static implicit operator SByte(JsonPrimitive value)
+        {
+            return (SByte)value._value;
         }
         
         public JsonPrimitive(Single value)
         {
             _jsonType = Json.JsonType.Number;
             _type = PrimitiveType.Single;
-            _value = value.ToString();
+            _value = value;
+        }
+        public static implicit operator Single(JsonPrimitive value)
+        {
+            return (Single)value._value;
         }
 
         public JsonPrimitive(String value)
         {
             _jsonType = Json.JsonType.String;
             _type = PrimitiveType.String;
-            _value = value.ToString();
+            _value = value;
         }
-        
+        public static implicit operator String(JsonPrimitive value)
+        {
+            return value._value as string;
+        }
+
         public JsonPrimitive(TimeSpan value)
         {
             _jsonType = Json.JsonType.Number;
             _type = PrimitiveType.TimeSpan;
-            _value = value.ToString();
+            _value = value;
+        }
+        public static implicit operator TimeSpan(JsonPrimitive value)
+        {
+            return (TimeSpan)value._value;
         }
 
         public JsonPrimitive(UInt16 value)
         {
             _jsonType = Json.JsonType.Number;
             _type = PrimitiveType.UInt16;
-            _value = value.ToString();
+            _value = value;
+        }
+        public static implicit operator UInt16(JsonPrimitive value)
+        {
+            return (UInt16)value._value;
         }
 
         public JsonPrimitive(UInt32 value)
         {
             _jsonType = Json.JsonType.Number;
             _type = PrimitiveType.UInt32;
-            _value = value.ToString();
+            _value = value;
+        }
+        public static implicit operator UInt32(JsonPrimitive value)
+        {
+            return (UInt32)value._value;
         }
 
         public JsonPrimitive(UInt64 value)
         {
             _jsonType = Json.JsonType.Number;
             _type = PrimitiveType.UInt64;
-            _value = value.ToString();
+            _value = value;
+        }
+        public static implicit operator UInt64(JsonPrimitive value)
+        {
+            return (UInt64)value._value;
         }
 
         public JsonPrimitive(Uri value)
         {
             _jsonType = Json.JsonType.String;
             _type = PrimitiveType.Uri;
-            _value = value.ToString();
+            _value = value;
+        }
+        public static implicit operator Uri(JsonPrimitive value)
+        {
+            return (Uri)value._value;
         }
 
         public JsonPrimitive()
         {
         }
-
-        //public static explicit operator Boolean(JsonPrimitive json)
-        //{
-        //    return Boolean.Parse(json._value);
-        //}
-
-        //public static explicit operator String(JsonPrimitive json)
-        //{
-        //    return json._value;
-        //}
-
 
         public override string ToString()
         {
@@ -182,7 +243,7 @@ namespace SimulacraJson
                 case Json.JsonType.String:
                     StringBuilder sb = new StringBuilder();
                     sb.Append("\"");
-                    foreach (char c in _value.ToCharArray())
+                    foreach (char c in ((string)_value).ToCharArray())
                     {
                         switch (c)
                         {
@@ -227,10 +288,10 @@ namespace SimulacraJson
 
                     break;
                 case Json.JsonType.Number:
-                    serialized = _value;
+                    serialized = _value.ToString();
                     break;
                 case Json.JsonType.Boolean:
-                    serialized = _value;
+                    serialized = ((bool)_value) ? "true" : "false";
                     break;
             }
 

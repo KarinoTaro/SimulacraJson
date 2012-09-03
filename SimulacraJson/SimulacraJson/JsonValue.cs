@@ -174,7 +174,7 @@ namespace SimulacraJson
 
         public static implicit operator Int32(JsonValue value)
         {
-            return (Int32)value;
+            return (JsonPrimitive)value;
         }
         #endregion
 
@@ -222,7 +222,7 @@ namespace SimulacraJson
 
         public static implicit operator String(JsonValue value)
         {
-            return (String)value;
+            return (JsonPrimitive)value;
         }
         #endregion
 

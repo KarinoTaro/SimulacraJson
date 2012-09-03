@@ -56,6 +56,18 @@ namespace SimulacraJsonSample
             root.Add("Key4", array);
             root.Add("Key5", new JsonArray() { "test", 123, });
 
+            string a = root["Key1"];
+            int b = root["Key2"];
+            try
+            {
+                int c = int.Parse(root["Key1"]);
+            }
+            catch { //(Exception ex) {
+                //MessageBox.Show(ex.Message);
+            }
+
+            string d = root["Key2"].ToString();
+
             OutputText.Text = root.ToString();
         }
     }
