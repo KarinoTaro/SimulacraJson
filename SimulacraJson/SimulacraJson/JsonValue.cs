@@ -66,7 +66,7 @@ namespace SimulacraJson
 
         public static implicit operator Boolean(JsonValue value)
         {
-            return (Boolean)value;
+            return (JsonPrimitive)value;
         }
         #endregion
 
@@ -78,7 +78,7 @@ namespace SimulacraJson
 
         public static implicit operator Byte(JsonValue value)
         {
-            return (Byte)value;
+            return (JsonPrimitive)value;
         }
         #endregion
 
@@ -90,7 +90,7 @@ namespace SimulacraJson
 
         public static implicit operator Char(JsonValue value)
         {
-            return (Char)value;
+            return (JsonPrimitive)value;
         }
         #endregion
 
@@ -102,7 +102,7 @@ namespace SimulacraJson
 
         public static implicit operator DateTime(JsonValue value)
         {
-            return (DateTime)value;
+            return (JsonPrimitive)value;
         }
         #endregion
 
@@ -114,7 +114,7 @@ namespace SimulacraJson
 
         //public static implicit operator DateTimeOffset(JsonValue value)
         //{
-        //    return (DateTimeOffset)value;
+        //    return (JsonPrimitive)value;
         //}
         #endregion
 
@@ -126,7 +126,7 @@ namespace SimulacraJson
 
         public static implicit operator Decimal(JsonValue value)
         {
-            return (Decimal)value;
+            return (JsonPrimitive)value;
         }
         #endregion
 
@@ -138,7 +138,7 @@ namespace SimulacraJson
 
         public static implicit operator Double(JsonValue value)
         {
-            return (Double)value;
+            return (JsonPrimitive)value;
         }
         #endregion
 
@@ -150,7 +150,7 @@ namespace SimulacraJson
 
         public static implicit operator Guid(JsonValue value)
         {
-            return (Guid)value;
+            return (JsonPrimitive)value;
         }
         #endregion
 
@@ -162,7 +162,7 @@ namespace SimulacraJson
 
         public static implicit operator Int16(JsonValue value)
         {
-            return (Int16)value;
+            return (JsonPrimitive)value;
         }
         #endregion
 
@@ -174,7 +174,7 @@ namespace SimulacraJson
 
         public static implicit operator Int32(JsonValue value)
         {
-            return (Int32)value;
+            return (JsonPrimitive)value;
         }
         #endregion
 
@@ -186,7 +186,7 @@ namespace SimulacraJson
 
         public static implicit operator Int64(JsonValue value)
         {
-            return (Int64)value;
+            return (JsonPrimitive)value;
         }
         #endregion
 
@@ -198,7 +198,7 @@ namespace SimulacraJson
 
         public static implicit operator SByte(JsonValue value)
         {
-            return (SByte)value;
+            return (JsonPrimitive)value;
         }
         #endregion
 
@@ -210,7 +210,7 @@ namespace SimulacraJson
 
         public static implicit operator Single(JsonValue value)
         {
-            return (Single)value;
+            return (JsonPrimitive)value;
         }
         #endregion
 
@@ -222,7 +222,7 @@ namespace SimulacraJson
 
         public static implicit operator String(JsonValue value)
         {
-            return (String)value;
+            return (JsonPrimitive)value;
         }
         #endregion
 
@@ -234,7 +234,7 @@ namespace SimulacraJson
 
         public static implicit operator TimeSpan(JsonValue value)
         {
-            return (TimeSpan)value;
+            return (JsonPrimitive)value;
         }
         #endregion
 
@@ -246,7 +246,7 @@ namespace SimulacraJson
 
         public static implicit operator UInt16(JsonValue value)
         {
-            return (UInt16)value;
+            return (JsonPrimitive)value;
         }
         #endregion
 
@@ -258,7 +258,7 @@ namespace SimulacraJson
 
         public static implicit operator UInt32(JsonValue value)
         {
-            return (UInt32)value;
+            return (JsonPrimitive)value;
         }
         #endregion
 
@@ -270,7 +270,7 @@ namespace SimulacraJson
 
         public static implicit operator UInt64(JsonValue value)
         {
-            return (UInt64)value;
+            return (JsonPrimitive)value;
         }
         #endregion
 
@@ -282,7 +282,7 @@ namespace SimulacraJson
 
         public static implicit operator Uri(JsonValue value)
         {
-            return (Uri)value;
+            return (JsonPrimitive)value;
         }
         #endregion
 
@@ -487,7 +487,14 @@ namespace SimulacraJson
                         }
                         break;
                     case TokenKind.Number:
-                        jobj = new JsonPrimitive(Int64.Parse(token.Value));  // 数値 Numberをもっと厳密にやったほうが良い
+                        if (token.Value.IndexOf('.') > -1)
+                        {
+                            jobj = new JsonPrimitive(double.Parse(token.Value));
+                        }
+                        else
+                        {
+                            jobj = new JsonPrimitive(Int64.Parse(token.Value));
+                        }
                         break;
                     case TokenKind.True:
                         jobj = new JsonPrimitive(true);

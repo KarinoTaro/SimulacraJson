@@ -47,14 +47,27 @@ namespace SimulacraJsonSample
             root.Add("Key2", 100000);
             root.Add("Key3", "漢字");
             var array = new JsonArray();
-            array.Add(100);
+            array.Add(100.5);
             array.Add(200);
             array.Add(300);
             array.Add(true);
             array.Add(false);
             array.Add(null);
             root.Add("Key4", array);
-            root.Add("Key5", new JsonArray() { "test", 123, });
+            root.Add("Key5", new JsonArray() { "test", 123.5, });
+            root.Add("Key6", JsonValue.Parse(@"[10,20,35.6,""Test""]"));
+
+            string a = root["Key1"];
+            int b = root["Key2"];
+            try
+            {
+                int c = int.Parse(root["Key1"]);
+            }
+            catch { //(Exception ex) {
+                //MessageBox.Show(ex.Message);
+            }
+
+            string d = root["Key2"].ToString();
 
             OutputText.Text = root.ToString();
         }
