@@ -117,7 +117,7 @@ namespace SimulacraJson
         }
         public static implicit operator Int16(JsonPrimitive value)
         {
-            return (Int16)value._value;
+            return Convert.ToInt16(value._value);
         }
         
         public JsonPrimitive(Int32 value)
@@ -128,7 +128,7 @@ namespace SimulacraJson
         }
         public static implicit operator Int32(JsonPrimitive value)
         {
-            return (Int32)value._value;
+            return Convert.ToInt32(value._value);
         }
         
         public JsonPrimitive(Int64 value)
@@ -194,7 +194,7 @@ namespace SimulacraJson
         }
         public static implicit operator UInt16(JsonPrimitive value)
         {
-            return (UInt16)value._value;
+            return Convert.ToUInt16(value._value);
         }
 
         public JsonPrimitive(UInt32 value)
@@ -205,7 +205,7 @@ namespace SimulacraJson
         }
         public static implicit operator UInt32(JsonPrimitive value)
         {
-            return (UInt32)value._value;
+            return Convert.ToUInt32(value._value);
         }
 
         public JsonPrimitive(UInt64 value)
