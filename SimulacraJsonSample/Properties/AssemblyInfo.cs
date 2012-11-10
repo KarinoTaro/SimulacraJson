@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("SimulacraJsonSample")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("sakasama.com")]
 [assembly: AssemblyProduct("SimulacraJsonSample")]
-[assembly: AssemblyCopyright("Copyright ©  2012")]
+[assembly: AssemblyCopyright("Copyright ©  2012 Taro Karino")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

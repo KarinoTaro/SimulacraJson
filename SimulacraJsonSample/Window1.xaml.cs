@@ -59,6 +59,8 @@ namespace SimulacraJsonSample
 
             string a = root["Key1"];
             int b = root["Key2"];
+            var f = (int)root["Key5"][1];
+
             try
             {
                 int c = int.Parse(root["Key1"]);
