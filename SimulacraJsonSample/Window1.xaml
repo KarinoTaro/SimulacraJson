@@ -13,13 +13,15 @@
         </TextBox>
         <Grid Grid.Row="1" >
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30*" />
                 <ColumnDefinition Width="100*" />
                 <ColumnDefinition Width="50*" />
                 <ColumnDefinition Width="100*" />
             </Grid.ColumnDefinitions>
-            <Button Margin="3" Name="ParseAndSerializeButton" Click="ParseAndSerializeButton_Click">Parse and Serialize</Button>
-            <CheckBox Grid.Column="1" Margin="3" Name="CharEscapeCheck" VerticalAlignment="Center" IsChecked="True">Char escape</CheckBox>
-            <Button Grid.Column="2" Margin="3" Name="TestCreateJsonValueButton" Click="TestCreateJsonValueButton_Click">Test create JsonValue</Button>
+            <TextBox Name="NumberOfRuns" />
+            <Button Grid.Column="1" Margin="3" Name="ParseAndSerializeButton" Click="ParseAndSerializeButton_Click">Parse and Serialize</Button>
+            <CheckBox Grid.Column="2" Margin="3" Name="CharEscapeCheck" VerticalAlignment="Center" IsChecked="True">Char escape</CheckBox>
+            <Button Grid.Column="3" Margin="3" Name="TestCreateJsonValueButton" Click="TestCreateJsonValueButton_Click">Test create JsonValue</Button>
         </Grid>
         <TextBox Name="OutputText" Grid.Row="2" Margin="3" AcceptsReturn="True" TextWrapping="Wrap" />
     </Grid>

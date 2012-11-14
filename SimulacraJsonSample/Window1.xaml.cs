@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SimulacraJson;
+using System.Diagnostics;
 
 namespace SimulacraJsonSample
 {
@@ -29,12 +30,36 @@ namespace SimulacraJsonSample
         {
             SimulacraJson.Json.SerializationWithoutEscape = !(bool)CharEscapeCheck.IsChecked;
 
-            var json = JsonValue.Parse(InputText.Text);
+            int trycount = 1;
 
-            if (json != null)
+            try
             {
-                OutputText.Text = json.ToString();
+                trycount = int.Parse(NumberOfRuns.Text);
             }
+            catch { }
+
+            var sw = new Stopwatch();
+
+            sw.Start();
+            try
+            {
+                for (var i = 0; i < trycount; i++)
+                {
+                    var json = JsonValue.Parse(InputText.Text);
+
+                    if (json != null)
+                    {
+                        OutputText.Text = json.ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            sw.Stop();
+
+            MessageBox.Show(trycount.ToString() + " times - " + sw.Elapsed.ToString());
         }
 
         private void TestCreateJsonValueButton_Click(object sender, RoutedEventArgs e)
