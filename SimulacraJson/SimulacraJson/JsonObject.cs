@@ -124,7 +124,14 @@ namespace SimulacraJson
         {
             get
             {
-                return _items[key];
+                if (_items.ContainsKey(key))
+                {
+                    return _items[key];
+                }
+                else
+                {
+                    return null;
+                }
             }
             set
             {

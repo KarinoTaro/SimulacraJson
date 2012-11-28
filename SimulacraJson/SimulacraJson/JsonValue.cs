@@ -315,26 +315,10 @@ namespace SimulacraJson
             return Parser(textReader);
         }
 
-        // True: OK : False: Error
-        //   None   BeObj  EnObj  BeAry  EnAry  Str    Num    Colon  Comma  True   False  Null   EOF    <- new token   | last token
-        private static bool[,] syntaxCheckTable = {                                                                 // v
-            {true,  true,  false, true,  false, true,  true,  false, false, true,  true,  true,  true,  },          // None
-            {true,  false, true,  false, false, true,  false, false, false, false, false, false, true,  },          // BeginObject
-            {true,  false, true,  false, true,  false, false, false, true,  false, false, false, true,  },          // EndObject
-            {true,  true,  false, true,  true,  true,  true,  false, true,  true,  true,  true,  true,  },          // BeginArray
-            {true,  false, true,  false, true,  false, false, false, true,  false, false, false, true,  },          // EndArray
-            {true,  false, true,  false, true,  false, false, true,  true,  false, false, false, true,  },          // String
-            {true,  false, true,  false, true,  false, false, false, true,  false, false, false, true,  },          // Number
-            {true,  true,  false, true,  false, true,  true,  false, false, true,  true,  true,  true,  },          // Colon
-            {true,  true,  true,  true,  true,  true,  true,  false, false, true,  true,  true,  true,  },          // Comma
-            {true,  false, true,  false, true,  false, false, false, true,  false, false, false, true,  },          // True
-            {true,  false, true,  false, true,  false, false, false, true,  false, false, false, true,  },          // False
-            {true,  false, true,  false, true,  false, false, false, true,  false, false, false, true,  },          // Null
-        };
-
         private static JsonValue Parser(TextReader reader)
         {
             JsonValue root = null;
+            //root.IsRoot = true;
 
             List<JsonValue> tree = new List<JsonValue>();
 
@@ -342,18 +326,149 @@ namespace SimulacraJson
             TokenKind lastReadToken = TokenKind.None;
             string key = "";
 
-            foreach(var token in JsonToken.Lexical(reader))
+            bool done = false;
+
+            while (!done)
             {
+                JsonToken token = JsonToken.Lexical(reader);
+
                 // 簡易構文チェック
-                if (!syntaxCheckTable[(int)lastReadToken, (int)token.TokenKind])
+                switch (lastReadToken)
                 {
-                    throw new Exception("ParseException");
+                    case TokenKind.None:
+                        switch (token.TokenKind)
+                        {
+                            case TokenKind.EndObject:
+                            case TokenKind.EndArray:
+                            case TokenKind.Colon:
+                            case TokenKind.Comma:
+                                // error
+                                done = true;
+                                continue;
+                        }
+                        break;
+                    case TokenKind.BeginObject:
+                        switch (token.TokenKind)
+                        {
+                            case TokenKind.BeginObject:
+                            case TokenKind.BeginArray:
+                            case TokenKind.EndArray:
+                            case TokenKind.Number:
+                            case TokenKind.True:
+                            case TokenKind.False:
+                            case TokenKind.Null:
+                            case TokenKind.Colon:
+                            case TokenKind.Comma:
+                                // error
+                                done = true;
+                                continue;
+                        }
+                        break;
+                    case TokenKind.EndObject:
+                        switch (token.TokenKind)
+                        {
+                            case TokenKind.BeginObject:
+                            case TokenKind.BeginArray:
+                            case TokenKind.String:
+                            case TokenKind.Number:
+                            case TokenKind.True:
+                            case TokenKind.False:
+                            case TokenKind.Null:
+                            case TokenKind.Colon:
+                                // error
+                                done = true;
+                                continue;
+                        }
+                        break;
+                    case TokenKind.BeginArray:
+                        switch (token.TokenKind)
+                        {
+                            case TokenKind.EndObject:
+                            case TokenKind.Colon:
+                                // error
+                                done = true;
+                                continue;
+                        }
+                        break;
+                    case TokenKind.EndArray:
+                        switch (token.TokenKind)
+                        {
+                            case TokenKind.BeginObject:
+                            case TokenKind.BeginArray:
+                            case TokenKind.String:
+                            case TokenKind.Number:
+                            case TokenKind.True:
+                            case TokenKind.False:
+                            case TokenKind.Null:
+                            case TokenKind.Colon:
+                                // error
+                                done = true;
+                                continue;
+                        }
+                        break;
+                    case TokenKind.String:
+                        switch (token.TokenKind)
+                        {
+                            case TokenKind.BeginObject:
+                            case TokenKind.BeginArray:
+                            case TokenKind.String:
+                            case TokenKind.Number:
+                            case TokenKind.True:
+                            case TokenKind.False:
+                            case TokenKind.Null:
+                                // error
+                                done = true;
+                                continue;
+                        }
+                        break;
+                    case TokenKind.Number:
+                    case TokenKind.True:
+                    case TokenKind.False:
+                    case TokenKind.Null:
+                        switch (token.TokenKind)
+                        {
+                            case TokenKind.BeginObject:
+                            case TokenKind.BeginArray:
+                            case TokenKind.String:
+                            case TokenKind.Number:
+                            case TokenKind.True:
+                            case TokenKind.False:
+                            case TokenKind.Null:
+                            case TokenKind.Colon:
+                                // error
+                                done = true;
+                                continue;
+                        }
+                        break;
+                    case TokenKind.Colon:
+                        switch (token.TokenKind)
+                        {
+                            case TokenKind.EndObject:
+                            case TokenKind.EndArray:
+                            case TokenKind.Colon:
+                            case TokenKind.Comma:
+                                // error
+                                done = true;
+                                continue;
+                        }
+                        break;
+                    case TokenKind.Comma:
+                        switch (token.TokenKind)
+                        {
+                            case TokenKind.Colon:
+                            case TokenKind.Comma:
+                                // error
+                                done = true;
+                                continue;
+                        }
+                        break;
                 }
 
                 JsonValue jobj = null;
                 switch (token.TokenKind)
                 {
                     case TokenKind.EOF:
+                        done = true;
                         break;
                     case TokenKind.BeginArray:
                         jobj = new JsonArray();
@@ -564,20 +679,16 @@ namespace SimulacraJson
             TokenKind = kind;
         }
 
-        public static IEnumerable<JsonToken> Lexical(TextReader stream)
+        public static JsonToken Lexical(TextReader stream)
         {
             StringBuilder sb = new StringBuilder();
             bool isString = false;
-            char scode;
-            char lastCode;
-            int ucode;
 
             while (true)
             {
                 if (stream.Peek() == -1)
                 {
-                    yield return new JsonToken(TokenKind.EOF);
-                    yield break;
+                    return new JsonToken(TokenKind.EOF);
                 }
 
                 char code = Convert.ToChar(stream.Read());
@@ -585,21 +696,18 @@ namespace SimulacraJson
                 switch (code)
                 {
                     case '{':
-                        yield return new JsonToken(TokenKind.BeginObject);
-                        break;
+                        return new JsonToken(TokenKind.BeginObject);
                     case '}':
-                        yield return new JsonToken(TokenKind.EndObject);
-                        break;
+                        return new JsonToken(TokenKind.EndObject);
                     case '[':
-                        yield return new JsonToken(TokenKind.BeginArray);
-                        break;
+                        return new JsonToken(TokenKind.BeginArray);
                     case ']':
-                        yield return new JsonToken(TokenKind.EndArray);
-                        break;
+                        return new JsonToken(TokenKind.EndArray);
                     case '"':
                         sb = new StringBuilder();
 
-                        lastCode = '\0';
+                        char scode;
+                        char lastCode = '\0';
                         while (true)
                         {
                             scode = Convert.ToChar(stream.Read());
@@ -634,7 +742,7 @@ namespace SimulacraJson
                                         sb.Append('\t');
                                         break;
                                     case 'u':
-                                        ucode = 0;
+                                        int ucode = 0;
                                         // 以下の４行は高速化のためチェックせず行っているがチェックが必要
                                         ucode = charcode[hexchars.IndexOf((char)stream.Read())] << 4;
                                         ucode = (ucode + charcode[hexchars.IndexOf((char)stream.Read())]) << 4;
@@ -652,22 +760,17 @@ namespace SimulacraJson
 
                                 if (scode == '"')   // && lastCode != '\\')
                                 {
-                                    yield return new JsonToken(TokenKind.String) { Value = sb.ToString() };
-                                    sb = new StringBuilder();
-                                    break;
+                                    return new JsonToken(TokenKind.String) { Value = sb.ToString() };
                                 }
 
                                 sb.Append(scode);
                             }
                             lastCode = scode;
                         }
-                        break;
                     case ':':
-                        yield return new JsonToken(TokenKind.Colon);
-                        break;
+                        return new JsonToken(TokenKind.Colon);
                     case ',':
-                        yield return new JsonToken(TokenKind.Comma);
-                        break;
+                        return new JsonToken(TokenKind.Comma);
                     case '-':
                     case '0':
                     case '1':
@@ -707,8 +810,7 @@ namespace SimulacraJson
                                 }
                             }
                         LoopOut_Number:
-                            yield return new JsonToken(TokenKind.Number) { Value = sb.ToString() };
-                            sb = new StringBuilder();
+                            return new JsonToken(TokenKind.Number) { Value = sb.ToString() };
                         }
                         break;
                     case ' ':
@@ -724,26 +826,29 @@ namespace SimulacraJson
                             int len = sb.Length;
                             if (len == 4 || len == 5)
                             {
-                                switch (sb.ToString().ToUpper())
+                                string check = sb.ToString();
+                                switch (check)
                                 {
+                                    case "true":
+                                    case "True":
                                     case "TRUE":
-                                        yield return new JsonToken(TokenKind.True);
-                                        sb = new StringBuilder();
-                                        break;
+                                        return new JsonToken(TokenKind.True);
+                                    case "false":
+                                    case "False":
                                     case "FALSE":
-                                        yield return new JsonToken(TokenKind.False);
-                                        sb = new StringBuilder();
-                                        break;
+                                        return new JsonToken(TokenKind.False);
+                                    case "null":
+                                    case "Null":
                                     case "NULL":
-                                        yield return new JsonToken(TokenKind.Null);
-                                        sb = new StringBuilder();
-                                        break;
+                                        return new JsonToken(TokenKind.Null);
                                 }
                             }
                         }
                         break;
                 }
             }
+
+            //return new JsonToken();
         }
     }
     #endregion
