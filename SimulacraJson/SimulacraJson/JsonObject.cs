@@ -5,9 +5,9 @@ using System.Collections.Generic;
 // http://msdn.microsoft.com/ja-jp/library/system.json.jsonobject(v=vs.95).aspx
 namespace SimulacraJson
 {
-    public class JsonObject : JsonValue, IDictionary<string, JsonValue>, ICollection<KeyValuePair<string, JsonValue>>, IEnumerable<KeyValuePair<string, JsonValue>>, IEnumerable
+    public class JsonObject : JsonValue, IDictionary<string, JsonValue>
     {
-        private IDictionary<string, JsonValue> _items = new Dictionary<string, JsonValue>();
+        private readonly IDictionary<string, JsonValue> _items = new Dictionary<string, JsonValue>();
 
         public JsonObject()
         {
@@ -17,7 +17,7 @@ namespace SimulacraJson
         {
             foreach (var value in values)
             {
-                this._items.Add(value);
+                _items.Add(value);
             }
         }
 
@@ -25,7 +25,7 @@ namespace SimulacraJson
         {
             foreach (var value in values)
             {
-                this._items.Add(value);
+                _items.Add(value);
             }
         }
 
@@ -115,7 +115,7 @@ namespace SimulacraJson
             return _items.GetEnumerator();
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return _items.GetEnumerator();
         }
@@ -124,14 +124,7 @@ namespace SimulacraJson
         {
             get
             {
-                if (_items.ContainsKey(key))
-                {
-                    return _items[key];
-                }
-                else
-                {
-                    return null;
-                }
+                return _items[key];
             }
             set
             {

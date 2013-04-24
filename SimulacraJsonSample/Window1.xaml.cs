@@ -3,14 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using SimulacraJson;
 using System.Diagnostics;
 
@@ -28,7 +20,7 @@ namespace SimulacraJsonSample
 
         private void ParseAndSerializeButton_Click(object sender, RoutedEventArgs e)
         {
-            SimulacraJson.Json.SerializationWithoutEscape = !(bool)CharEscapeCheck.IsChecked;
+            Json.SerializationWithoutEscape = !(bool)CharEscapeCheck.IsChecked;
 
             int trycount = 1;
 
@@ -64,37 +56,67 @@ namespace SimulacraJsonSample
 
         private void TestCreateJsonValueButton_Click(object sender, RoutedEventArgs e)
         {
-            SimulacraJson.Json.SerializationWithoutEscape = !(bool)CharEscapeCheck.IsChecked;
+            Json.SerializationWithoutEscape = !(bool)CharEscapeCheck.IsChecked;
             
-            var root = new JsonObject();
+            var root = new JsonObject {{"Key1", "Value1"}, {"Key2", 100000}, {"Key3", "漢字"}};
 
-            root.Add("Key1", "Value1");
-            root.Add("Key2", 100000);
-            root.Add("Key3", "漢字");
-            var array = new JsonArray();
-            array.Add(100.5);
-            array.Add(200);
-            array.Add(300);
-            array.Add(true);
-            array.Add(false);
-            array.Add(null);
+            var array = new JsonArray {100.5, 200, 300, true, false, null};
             root.Add("Key4", array);
             root.Add("Key5", new JsonArray() { "test", 123.5, });
             root.Add("Key6", JsonValue.Parse(@"[10,20,35.6,""Test""]"));
 
-            string a = root["Key1"];
+            var a = root["Key1"];
             int b = root["Key2"];
             var f = (int)root["Key5"][1];
 
             try
             {
-                int c = int.Parse(root["Key1"]);
+                var c = int.Parse(root["Key1"]);
             }
             catch { //(Exception ex) {
                 //MessageBox.Show(ex.Message);
             }
 
-            string d = root["Key2"].ToString();
+            var d = root["Key2"].ToString();
+
+            JsonValue value;
+            if (root.TryGetValue("Key1", out value))
+            {
+                MessageBox.Show("TryGetValue: OK Result = " + value);
+            }
+            else
+            {
+                MessageBox.Show("TryGetValue: NG");
+            }
+
+            if (root.TryGetValue("NoKey", out value))
+            {
+                MessageBox.Show("TryGetValue(Key not found): NG");
+            }
+            else
+            {
+                MessageBox.Show("TryGetValue(Key not found): OK");
+            }
+
+            // Key not found error
+            try
+            {
+                var x = root["xxx"];
+            }
+            catch (Exception eknf)
+            {
+                MessageBox.Show("Key not found error:" + eknf.Message);
+            }
+
+            // Out of range error
+            try
+            {
+                var x = root[1];
+            }
+            catch (Exception eoor)
+            {
+                MessageBox.Show("Out of range:" + eoor.Message);
+            }
 
             OutputText.Text = root.ToString();
         }

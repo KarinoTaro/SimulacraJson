@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 // http://msdn.microsoft.com/ja-jp/library/cc626400(v=vs.95)
 namespace SimulacraJson
 {

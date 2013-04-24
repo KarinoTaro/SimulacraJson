@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 
 namespace SimulacraJson
 {
-    public class JsonArray : JsonValue, IList<JsonValue>, ICollection<JsonValue>, IEnumerable<JsonValue>, IEnumerable
+    public class JsonArray : JsonValue, IList<JsonValue>
     {
         // http://msdn.microsoft.com/ja-jp/library/system.json.jsonarray(v=vs.95).aspx
-        private IList<JsonValue> _items = new List<JsonValue>();
+        private readonly IList<JsonValue> _items = new List<JsonValue>();
 
         public JsonArray()
         {
@@ -18,7 +16,7 @@ namespace SimulacraJson
         {
             foreach (var value in values)
             {
-                this._items.Add(value);
+                _items.Add(value);
             }
         }
 
@@ -26,7 +24,7 @@ namespace SimulacraJson
         {
             foreach (var value in values)
             {
-                this._items.Add(value);
+                _items.Add(value);
             }
         }
 
@@ -93,7 +91,7 @@ namespace SimulacraJson
             return _items.GetEnumerator();
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return _items.GetEnumerator();
         }
