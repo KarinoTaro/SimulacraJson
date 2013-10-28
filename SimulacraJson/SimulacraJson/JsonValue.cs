@@ -26,11 +26,11 @@ namespace SimulacraJson
         {
             get
             {
-                throw new ArgumentOutOfRangeException();
+                throw new InvalidOperationException();
             }
             set
             {
-                throw new ArgumentOutOfRangeException();
+                throw new InvalidOperationException();
             }
         }
 
@@ -284,9 +284,13 @@ namespace SimulacraJson
         #region Parser
         public static JsonValue Parse(string jsonString)
         {
-            if (string.IsNullOrEmpty(jsonString))
+            if (jsonString == null)
             {
-                throw new Exception("ArgumentException");
+                throw new ArgumentNullException();
+            }
+            if (jsonString == "")
+            {
+                throw  new ArgumentException();
             }
 
             return Load(new StringReader(jsonString));
@@ -296,7 +300,7 @@ namespace SimulacraJson
         {
             if (stream == null)
             {
-                throw new Exception("ArgumentNullException");
+                throw new ArgumentNullException();
             }
             return Load(new StreamReader(stream, Encoding.UTF8));
         }
@@ -305,7 +309,7 @@ namespace SimulacraJson
         {
             if (textReader == null)
             {
-                throw new Exception("ArgumentNullException");
+                throw new ArgumentNullException();
             }
             return Parser(textReader);
         }
