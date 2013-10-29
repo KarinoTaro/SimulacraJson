@@ -40,8 +40,18 @@ namespace Test
         [ExpectedException(typeof(KeyNotFoundException))]
         public void KeyNotFoundExceptionTestMethod()
         {
+            Json.ReturnNullIfKeyNotFound = false;
             var json = JsonValue.Parse(@"{""key1"":1, ""key2"": 2, ""key3"":3]");
             var a = json["key4"];
+        }
+
+        [TestMethod]
+        public void ReturnNullIfKeyNotFoundTestMethod()
+        {
+            Json.ReturnNullIfKeyNotFound = true;
+            var json = JsonValue.Parse(@"{""key1"":1, ""key2"": 2, ""key3"":3]");
+            var a = json["key4"];
+            Assert.IsNull(a);
         }
     }
 }

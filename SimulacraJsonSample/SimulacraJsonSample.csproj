@@ -77,21 +77,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\SimulacraJson\SimulacraJson\Json.cs">
-      <Link>SimulacraJson\Json.cs</Link>
-    </Compile>
-    <Compile Include="..\SimulacraJson\SimulacraJson\JsonArray.cs">
-      <Link>SimulacraJson\JsonArray.cs</Link>
-    </Compile>
-    <Compile Include="..\SimulacraJson\SimulacraJson\JsonObject.cs">
-      <Link>SimulacraJson\JsonObject.cs</Link>
-    </Compile>
-    <Compile Include="..\SimulacraJson\SimulacraJson\JsonPrimitive.cs">
-      <Link>SimulacraJson\JsonPrimitive.cs</Link>
-    </Compile>
-    <Compile Include="..\SimulacraJson\SimulacraJson\JsonValue.cs">
-      <Link>SimulacraJson\JsonValue.cs</Link>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -114,6 +99,12 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SimulacraJson\SimulacraJson.csproj">
+      <Project>{12da1d03-53c0-4165-89e3-3e18331ce94e}</Project>
+      <Name>SimulacraJson</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

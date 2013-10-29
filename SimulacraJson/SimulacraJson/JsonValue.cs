@@ -316,19 +316,19 @@ namespace SimulacraJson
 
         // True: OK : False: Error
         //   None   BeObj  EnObj  BeAry  EnAry  Str    Num    Colon  Comma  True   False  Null   EOF    <- new token   | last token
-        private static readonly bool[,] SyntaxCheckTable = {                                                                 // v
-            {true,  true,  false, true,  false, true,  true,  false, false, true,  true,  true,  true,  },          // None
-            {true,  false, true,  false, false, true,  false, false, false, false, false, false, true,  },          // BeginObject
-            {true,  false, true,  false, true,  false, false, false, true,  false, false, false, true,  },          // EndObject
-            {true,  true,  false, true,  true,  true,  true,  false, true,  true,  true,  true,  true,  },          // BeginArray
-            {true,  false, true,  false, true,  false, false, false, true,  false, false, false, true,  },          // EndArray
-            {true,  false, true,  false, true,  false, false, true,  true,  false, false, false, true,  },          // String
-            {true,  false, true,  false, true,  false, false, false, true,  false, false, false, true,  },          // Number
-            {true,  true,  false, true,  false, true,  true,  false, false, true,  true,  true,  true,  },          // Colon
-            {true,  true,  true,  true,  true,  true,  true,  false, false, true,  true,  true,  true,  },          // Comma
-            {true,  false, true,  false, true,  false, false, false, true,  false, false, false, true,  },          // True
-            {true,  false, true,  false, true,  false, false, false, true,  false, false, false, true,  },          // False
-            {true,  false, true,  false, true,  false, false, false, true,  false, false, false, true,  },          // Null
+        private static readonly bool[,] SyntaxCheckTable = {                                                        // v
+            {true,  true,  false, true,  false, true,  true,  false, false, true,  true,  true,  true},             // None
+            {true,  false, true,  false, false, true,  false, false, false, false, false, false, true},             // BeginObject
+            {true,  false, true,  false, true,  false, false, false, true,  false, false, false, true},             // EndObject
+            {true,  true,  false, true,  true,  true,  true,  false, true,  true,  true,  true,  true},             // BeginArray
+            {true,  false, true,  false, true,  false, false, false, true,  false, false, false, true},             // EndArray
+            {true,  false, true,  false, true,  false, false, true,  true,  false, false, false, true},             // String
+            {true,  false, true,  false, true,  false, false, false, true,  false, false, false, true},             // Number
+            {true,  true,  false, true,  false, true,  true,  false, false, true,  true,  true,  true},             // Colon
+            {true,  true,  true,  true,  true,  true,  true,  false, false, true,  true,  true,  true},             // Comma
+            {true,  false, true,  false, true,  false, false, false, true,  false, false, false, true},             // True
+            {true,  false, true,  false, true,  false, false, false, true,  false, false, false, true},             // False
+            {true,  false, true,  false, true,  false, false, false, true,  false, false, false, true}              // Null
         };
 
         private static JsonValue Parser(TextReader reader)

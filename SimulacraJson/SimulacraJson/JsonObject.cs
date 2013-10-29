@@ -124,13 +124,22 @@ namespace SimulacraJson
         {
             get
             {
-                return _items[key];
+                JsonValue value;
+                if (_items.TryGetValue(key, out value))
+                {
+                    return value;
+                }
+                if (Json.ReturnNullIfKeyNotFound)
+                {
+                    return null;
+                }
+
+                throw new KeyNotFoundException();
             }
             set
             {
                 _items[key] = value;
             }
         }
-
     }
 }
